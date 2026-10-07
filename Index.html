@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Library Entry System</title>
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+            background: #f2f2f2;
+            padding: 40px;
+        }
+        .box {
+            background: white;
+            padding: 30px;
+            max-width: 400px;
+            margin: auto;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #ccc;
+        }
+        input {
+            width: 90%;
+            padding: 12px;
+            font-size: 18px;
+            margin: 15px 0;
+        }
+        button {
+            padding: 12px 30px;
+            font-size: 18px;
+            background: blue;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        #result {
+            margin-top: 25px;
+            font-size: 22px;
+            font-weight: bold;
+        }
+        .inside { color: green; }
+        .outside { color: red; }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <h1>📚 Library</h1>
+    <h2>ID Card Entry</h2>
+
+    <input type="text" id="idNumber" placeholder="Enter ID Number">
+    <br>
+    <button onclick="scanID()">Scan</button>
+
+    <div id="result"></div>
+</div>
+
+<script>
+let students = {};
+
+function scanID() {
+    let id = document.getElementById("idNumber").value.trim();
+    let result = document.getElementById("result");
+
+    if (id === "") {
+        result.innerHTML = "Enter ID Number";
+        result.className = "";
+        return;
+    }
+
+    if (!students[id]) {
+        students[id] = "inside";
+        result.innerHTML = "🟢 ID: " + id + "<br>INSIDE THE LIBRARY";
+        result.className = "inside";
+    } else if (students[id] === "inside") {
+        students[id] = "outside";
+        result.innerHTML = "🔴 ID: " + id + "<br>OUTSIDE THE LIBRARY";
+        result.className = "outside";
+    } else {
+        students[id] = "inside";
+        result.innerHTML = "🟢 ID: " + id + "<br>INSIDE THE LIBRARY";
+        result.className = "inside";
+    }
+
+    document.getElementById("idNumber").value = "";
+    document.getElementById("idNumber").focus();
+}
+
+document.getElementById("idNumber").addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+        scanID();
+    }
+});
+</script>
+
+</body>
+</html>
